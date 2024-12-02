@@ -43,7 +43,16 @@ Route::group(['prefix'=>'api-admin','namespace'=>'Admin','middleware'=>'check_ad
         Route::post('update/{id}','AdminUserController@update');
 
         Route::get('delete/{id}','AdminUserController@delete')->name('admin.user.delete');
-
+    });
+    Route::group(['prefix'=>'qtv'],function(){
+        Route::get('','AdminQtvController@index')->name('admin.qtv.index');
+        Route::get('create','AdminQtvController@create')->name('admin.qtv.create');
+        Route::post('create','AdminQtvController@store');
+        Route::get('hot/{id}','AdminQtvController@hot')->name('admin.qtv.hot');
+        Route::get('active/{id}','AdminQtvController@active')->name('admin.qtv.active');
+        Route::get('update/{id}','AdminQtvController@edit')->name('admin.qtv.update');
+        Route::post('update/{id}','AdminQtvController@update');
+        Route::get('delete/{id}','AdminQtvController@delete')->name('admin.qtv.delete');
     });
 //transaction
     Route::group(['prefix'=>'transaction'],function(){
