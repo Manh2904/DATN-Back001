@@ -47,7 +47,8 @@ class ProductDetailController extends Controller
         }
         $isMuaHang = Order::where('od_product_id', $product->id)
         ->whereHas('transaction', function($q){
-            $q->where('tst_user_id', auth('api')->user()->id);
+            $q->where('tst_user_id', auth('api')->user()->id)
+            ->where('tst_status', 4);
         })->count();
         $product['is_buy'] = $isMuaHang;
         $product['rating'] = $rating;
