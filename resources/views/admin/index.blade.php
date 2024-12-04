@@ -25,12 +25,12 @@
                         <div class="inner">
                             <h3>{{ $totalTransaction}}</h3>
 
-                            <p>Orders</p>
+                            <p>Đơn hàng</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a href="{{ route('admin.transaction.index') }}" class="small-box-footer">More info <i
+                        <a href="{{ route('admin.transaction.index') }}" class="small-box-footer">Chi tiết <i
                                     class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
@@ -41,12 +41,12 @@
                         <div class="inner">
                             <h3>{{ $totalRating}}</h3>
 
-                            <p>Rate</p>
+                            <p>Đánh giá</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
                         </div>
-                        <a href="{{ route('admin.rating')}}" class="small-box-footer">More info <i
+                        <a href="{{ route('admin.rating')}}" class="small-box-footer">Chi tiết <i
                                     class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
@@ -57,12 +57,12 @@
                         <div class="inner">
                             <h3>{{ $totalUser}}</h3>
 
-                            <p>User Registrations</p>
+                            <p>Người dùng</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
                         </div>
-                        <a href="{{ route('admin.user.index') }}" class="small-box-footer">More info <i
+                        <a href="{{ route('admin.user.index') }}" class="small-box-footer">Chi tiết <i
                                     class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
@@ -71,14 +71,14 @@
                     <!-- small box -->
                     <div class="small-box bg-red">
                         <div class="inner">
-                            <h3>65</h3>
+                            <h3>{{ $totalProduct }}</h3>
 
-                            <p>Unique Visitors</p>
+                            <p>Sản phẩm</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-pie-graph"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="{{ route('admin.product.index') }}" class="small-box-footer">Chi tiết <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -93,7 +93,7 @@
                         <div class="box-header">
                             <i class="fa fa-th"></i>
 
-                            <h3 class="box-title">Sales Graph</h3>
+                            <h3 class="box-title">Doanh thu theo ngày</h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn bg-teal btn-sm" data-widget="collapse"><i
@@ -106,7 +106,6 @@
                         </div>
                         <div class="box-body border-radius-none">
 
-                            <figure class="highcharts-figure">
                                 <div id="container2" data-json={{ $listDay }} data-money={{ $arrRevenueTransactionMonth }}
                                 data-money-default={{ $arrRevenueTransactionMonthDefault }}></div>
 
@@ -378,7 +377,7 @@
 
 
                             <h3 class="box-title">
-                                Thống kê
+                                Thống kê đơn hàng
                             </h3>
                         </div>
 
@@ -421,7 +420,7 @@
                                     <tbody>
                                     @foreach($hotProduct as $value => $list)
                                         <tr>
-                                            <td>{{ $value }}</td>
+                                            <td>{{ $value + 1 }}</td>
                                             <td>{{$list->id}}</a></td>
                                             <td>{{ $list->pro_name }}</td>
                                             <td><img src="{{ $list->pro_avatar }}"
