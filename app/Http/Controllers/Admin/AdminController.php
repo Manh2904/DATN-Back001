@@ -17,31 +17,36 @@ class AdminController extends Controller
         $totalTransaction = DB::table('transactions')->select('id')->count();
         $totalUser = User::select('id')->count();
         $totalRating = DB::table('ratings')->select('id')->count();
+        $totalProduct = Product::where("pro_active", 1)->count();
         $hotProduct = Product::orderByDesc('pro_pay')->limit(5)->get();
         //thống kê trạng thái đơn hàng
-        $transactionDefault = DB::table('transactions')->where('tst_status', 1)->select('id')->count();
         $transactionProcess = DB::table('transactions')->where('tst_status', 2)->select('id')->count();
-        $transactionSuccess = DB::table('transactions')->where('tst_status', 3)->select('id')->count();
+        $transactionShipped = DB::table('transactions')->where('tst_status', 3)->select('id')->count();
+        $transactionFinish = DB::table('transactions')->where('tst_status', 4)->select('id')->count();
+        $transactionConfirm = DB::table('transactions')->where('tst_status', 5)->select('id')->count();
+        $transactionConfirmed = DB::table('transactions')->where('tst_status', 6)->select('id')->count();
         $transactionCanCel = DB::table('transactions')->where('tst_status', -1)->select('id')->count();
         $statusTransaction = [
-            ['Đã thanh toán', $transactionSuccess, false],
-            ['Đang chờ thanh toán', $transactionProcess, false],
-            ['Đang vận chuyển', $transactionDefault, false],
-            ['Đã hủy', $transactionCanCel, false]
+            ['Đang vận chuyển', $transactionProcess, false],
+            ['Đã giao hàng', $transactionShipped, false],
+            ['Đã hủy', $transactionCanCel, false],
+            ['Hoàn thành', $transactionFinish, false],
+            ['Chờ xác nhận', $transactionConfirm, false],
+            ['Đã xác nhận', $transactionConfirmed, false]
         ];
 
         $listDay = Date::getListDayAndMonth();
         //doanh thu theo tháng đã xử lý
-        $revenueTransactionMonthDefault = Transaction::where('tst_status', 3)
+        $revenueTransactionMonthDefault = Transaction::where('tst_status', 4)
             ->whereMonth('created_at', date('m'))
-            ->select(DB::raw("sum(tst_total_money) as totalMoney"), DB::raw('DATE(created_at) as day'))
+            ->select(DB::raw("sum(cast(tst_total_money as int)) as totalMoney"), DB::raw('DATE(created_at) as day'))
             ->groupBy('day')
             ->get()
             ->toArray();
         //doanh thu theo tháng chưa xử lý
-        $revenueTransactionMonth = Transaction::where('tst_status', 1)
+        $revenueTransactionMonth = Transaction::where('tst_status', 5)
             ->whereMonth('created_at', date('m'))
-            ->select(DB::raw("sum(tst_total_money) as totalMoney"), DB::raw('DATE(created_at) as day'))
+            ->select(DB::raw("sum(cast(tst_total_money as int)) as totalMoney"), DB::raw('DATE(created_at) as day'))
             ->groupBy('day')
             ->get()
             ->toArray();
@@ -68,12 +73,11 @@ class AdminController extends Controller
             }
             $arrRevenueTransactionMonthDefault[] = (int)$total;
         }
-        $arrRevenueTransactionMonth = $this->getRevenue(0);
-        $arrRevenueTransactionMonthDefault = $this->getRevenue(1);
         $viewDate = [
             'totalTransaction' => $totalTransaction,
             'totalUser' => $totalUser,
             'totalRating' => $totalRating,
+            'totalProduct' => $totalProduct,
             'hotProduct' => $hotProduct,
             'listDay' => json_encode($listDay),
             'statusTransaction' => json_encode($statusTransaction),
@@ -85,6 +89,20 @@ class AdminController extends Controller
 
     public function getRevenue($type)
     {
+        //doanh thu theo tháng đã xử lý
+        $revenueTransactionMonthDefault = Transaction::where('tst_status', 3)
+          ->whereMonth('created_at', date('m'))
+          ->select(DB::raw("sum(cast(tst_total_money as int)) as totalMoney"), DB::raw('DATE(created_at) as day'))
+          ->groupBy('day')
+          ->get()
+          ->toArray();
+        //doanh thu theo tháng chưa xử lý
+        $revenueTransactionMonth = Transaction::where('tst_status', 1)
+            ->whereMonth('created_at', date('m'))
+            ->select(DB::raw("sum(cast(tst_total_money as int)) as totalMoney"), DB::raw('DATE(created_at) as day'))
+            ->groupBy('day')
+            ->get()
+            ->toArray();
         for ($i = 0; $i <= 30; $i++) {
             $data[$i] = 0;
         }
@@ -101,10 +119,5 @@ class AdminController extends Controller
             $data[14] = 300000000;
         }
         return $data;
-    }
-
-    public function postloginAdmin(Request $request)
-    {
-
     }
 }
