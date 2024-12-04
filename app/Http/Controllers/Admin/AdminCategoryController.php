@@ -30,7 +30,7 @@ class AdminCategoryController extends Controller
         $data['c_slug'] = Str::slug($data['c_name']);
         $data['created_at'] = Carbon::now();
         $id = Category::insertGetId($data);
-        return redirect()->back();
+        return redirect()->to('/api-admin/category');
     }
 
     public function edit($id)
@@ -48,7 +48,7 @@ class AdminCategoryController extends Controller
 
 
         $category->update($data);
-        return redirect()->back();
+        return redirect()->to('/api-admin/category');
     }
 
     public function delete($id)
