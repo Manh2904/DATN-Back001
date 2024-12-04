@@ -37,7 +37,7 @@ class AuthController extends Controller
     {
         $data = $request->only('email', 'password');
         if (!auth('api')->attempt($data)) {
-            return response()->json(['error' => 'Sai tài khoản hoặc mật khẩu'], 401);
+            return response()->json(['error' => 'Sai tài khoản hoặc mật khẩu'], 400);
         }
         $token = $this->createNewToken(auth('api')->attempt($data))->original;
         return response()->json([

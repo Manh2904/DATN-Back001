@@ -28,11 +28,17 @@ class TransactionController extends Controller
         $data['code'] = $code;
 
         if ($request->tst_type == 1) {
-            $this->storeTransaction($data, 1, 1);
+            $this->storeTransaction($data, 5, 1);
         }
 
         if ($request->tst_type == 2) {
-
+            $voucher = Voucher::where('name', $data['voucher'])
+            ->where('expired_date', '>', now())
+            ->first();
+            $price = $data['tst_total_money'];
+            if ($voucher) {
+                $price = $data['tst_total_money'] * (100 - $voucher->amount) / 100;
+            }
             $this->storeTransaction($data, 5, 2);
             $latestId = Transaction::orderBy('id', 'desc')->first()['id'];
             $vnp_TmnCode = Config::get('env.vnpay.code'); //Mã website tại VNPAY
@@ -42,7 +48,7 @@ class TransactionController extends Controller
             $vnp_TxnRef = $latestId; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
             $vnp_OrderInfo = "Thanh toán hóa đơn phí dich vụ";
             $vnp_OrderType = 'billpayment';
-            $vnp_Amount = $request->tst_total_money * 100;
+            $vnp_Amount = $price * 100;
             $vnp_Locale = 'vn';
             $vnp_IpAddr = request()->ip();
             $startTime = date("YmdHis");
@@ -135,8 +141,6 @@ class TransactionController extends Controller
                     'od_size' => 37,
                 ]);
                 //Tăng số lượt mua của sản phẩm
-                Product::where('id', $item['od_product_id'])
-                    ->increment("pro_pay");
                 $product->pro_amount = $product->pro_amount - $item['od_qty'];
                 $product->update();
             }
@@ -211,12 +215,40 @@ class TransactionController extends Controller
         $pay = Transaction::where('id', $request->vnp_TxnRef)->first();
         if ($pay) {
             if($request->vnp_ResponseCode == "00") {
-                $pay->tst_status = 2;
+                $pay->tst_status = 5;
             } else {
                 $pay->tst_status = -1;
+                $pay->update();
+                return redirect()->to('http://localhost:4000/?status=error');
             }
             $pay->update();
         }
-       return redirect()->to('http://localhost:4000');
+       return redirect()->to('http://localhost:4000/?status=success');
+    }
+
+
+    public function status(Request $request, $id)
+    {
+        $status = $request->status;
+        $transaction = Transaction::find($id);
+        if ($status == -1 && ($transaction->tst_status == 5 || $transaction->tst_status == 6)) {
+            $transaction->tst_status = $status;
+        }
+        if ($status == 4 && $transaction->tst_status == 3) {
+            $transaction->tst_status = $status;
+            $orders = Order::where("od_transaction_id", $id)->get();
+            foreach ($orders as $order) {
+                //Tăng số lượt mua của sản phẩm
+                $product = Product::find($order->od_product_id);
+                $product->pro_pay = $product->pro_pay + 1;
+                $product->pro_amount = $product->pro_amount - $order->od_qty;
+                $product->update();
+            }
+        }
+        $transaction->save();
+        $viewData = [
+            'status'   => 'success',
+        ];
+        return response()->json($viewData);
     }
 }

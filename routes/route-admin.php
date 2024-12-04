@@ -43,6 +43,7 @@ Route::group(['prefix'=>'api-admin','namespace'=>'Admin','middleware'=>'check_ad
         Route::post('update/{id}','AdminUserController@update');
 
         Route::get('delete/{id}','AdminUserController@delete')->name('admin.user.delete');
+
     });
     Route::group(['prefix'=>'qtv'],function(){
         Route::get('','AdminQtvController@index')->name('admin.qtv.index');
