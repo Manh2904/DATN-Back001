@@ -37,7 +37,7 @@
     <div class="login-box-body">
         <p class="login-box-msg">Sign in to start your session</p>
 
-        <form action="" method="post">
+        <form action="{{ route('get.login.admin') }}" method="post">
             @csrf
             <div class="form-group has-feedback">
                 <input type="email" name="email" class="form-control" value="admin@gmail.com" placeholder="Email">

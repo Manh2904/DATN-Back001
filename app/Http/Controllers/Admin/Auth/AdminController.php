@@ -14,11 +14,17 @@ class AdminController extends Controller
 
     public function getLoginAdmin()
     {
+        if (get_data_user('admins', 'id')) {
+            return redirect()->route('admin.index');
+        }
         return view('admin.auth.login');
     }
 
     public function postLoginAdmin(Request $request)
     {
+        if (get_data_user('admins', 'id')) {
+            return redirect()->route('admin.index');
+        }
         if (Auth::guard('admins')->attempt(['email' => $request->email, 'password' => $request->password])) {
 
             return redirect()->route('admin.index');

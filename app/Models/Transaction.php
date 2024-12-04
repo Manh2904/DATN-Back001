@@ -8,17 +8,13 @@ class Transaction extends Model
 {
     protected $guarded=[''];
     protected $status =[
-        '1' =>[
-            'class' => 'btn btn-default',
-            'name'  => 'Tiếp nhận'
-        ],
         '2' =>[
             'class' =>'btn btn-info',
             'name'  =>'Đang vận chuyển'
         ],
         '3' =>[
             'class' =>'btn btn-success',
-            'name'  =>'Đã bàn giao'
+            'name'  =>'Đã giao hàng'
         ],
         '-1' =>[
             'class' =>'btn btn-danger',
@@ -26,7 +22,15 @@ class Transaction extends Model
         ],
         '4' =>[
             'class' =>'btn btn-primary',
-            'name'  =>'Người dùng đã xác nhận'
+            'name'  =>'Hoàn thành'
+        ],
+        '5' =>[
+            'class' =>'btn btn-primary',
+            'name'  =>'Chờ xác nhận'
+        ],
+        '6' =>[
+            'class' =>'btn btn-primary',
+            'name'  =>'Đã xác nhận'
         ],
     ];
      public function getStatus()

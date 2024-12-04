@@ -23,7 +23,11 @@ class ShoppingCartController extends Controller
 
     public function index(Request $request)
     {
-        $transactions = Transaction::with('orders.product', 'voucher')->orderBy('id', 'desc');
+        $allTransaction = Transaction::where('tst_status', 3)->where('updated_at', '<=', date('Y-m-d', strtotime('-3 days')))->get();
+        foreach ($allTransaction as $value) {
+            $value->update(['tst_status' => 4]);
+        }
+        $transactions = Transaction::with('orders.product', 'voucher')->where('tst_user_id',get_data_user('api', 'id'))->orderBy('id', 'desc');
         if ($request->id) $transactions->where('id', $request->id);
         if ($email = $request->email) {
             $transactions->where('tst_email', 'like', '%' . $email . '%');

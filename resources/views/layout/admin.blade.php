@@ -140,6 +140,12 @@
                     </a>
                 </li>
                 <li class="">
+                    <a href="{{route('admin.qtv.index') }}">
+                        <i class="fa fa-user"></i>
+                        <span>Quản trị viên</span>
+                    </a>
+                </li>
+                <li class="">
                     <a href="{{route('admin.user.index') }}">
                         <i class="fa fa-user"></i>
                         <span>Người dùng</span>

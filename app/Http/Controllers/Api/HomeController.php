@@ -72,7 +72,7 @@ class HomeController extends Controller
             'productsWatch' => $productsWatch,
             'productsGlass' => $productsGlass,
             'productsAccessoriess' => $productsAccessoriess,
-            'title_page' => 'Đồng hồ Thụy Sỹ, đồng hồ nam, đồng hồ nữ chính hãng cao cấp',
+            'title_page' => 'Áo bóng đá',
             'listProduct1' => $listProduct1,
             'listProduct2' => $listProduct2,
             'listProduct3' => $listProduct3,

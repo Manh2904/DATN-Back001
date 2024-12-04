@@ -41,12 +41,14 @@ Route::group(['namespace'=>'Api'], function () {
     });
     Route::group(['middleware'=>'auth:api','prefix'=>'transaction'],function(){
         Route::post('store','TransactionController@postPay');
+        Route::put('status/{id}','TransactionController@status');
     });
     Route::group(['middleware'=>'auth:api','prefix'=>'rating'],function(){
         Route::get('','UserRatingController@index');
         Route::post('store','UserRatingController@store');
     });
     Route::group(['middleware'=>'auth:api','prefix'=>'voucher'],function(){
+        Route::get('','VoucherController@index');
         Route::get('detail','VoucherController@detail');
     });
     Route::get('payment/transaction/callback','TransactionController@callback');

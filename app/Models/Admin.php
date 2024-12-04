@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
- 
+
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 class Admin extends Authenticatable
@@ -15,7 +15,7 @@ class Admin extends Authenticatable
       * @var array
       */
     protected $fillable = [
-        'email', 'password',
+        'name', 'email', 'password',
     ];
      /**
       * The attributes that should be hidden for arrays.

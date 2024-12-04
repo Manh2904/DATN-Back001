@@ -8,8 +8,20 @@ use App\Models\Voucher;
 
 class VoucherController extends Controller
 {
+    public function index()
+    {
+        $voucher = Voucher::where('active', 1)
+        ->where('expired_date', '>', now())
+        ->get();
+        $viewData = [
+            'status' => 'success',
+            'content' => $voucher
+        ];
+        return response()->json($viewData);
+    }
     public function detail(Request $request){
         $voucher= Voucher::where('name', $request->voucher)
+        ->where('active', 1)
         ->where('expired_date', '>', now())
         ->first();
         $viewData = [

@@ -30,7 +30,7 @@ class AdminVoucherController extends Controller
         $data = $request->except('_token');
         $data['created_at'] = Carbon::now();
         $id = Voucher::insertGetId($data);
-        return redirect()->back();
+        return redirect()->to('/api-admin/voucher');
     }
 
     public function edit($id)
@@ -43,13 +43,8 @@ class AdminVoucherController extends Controller
     {
         $voucher = Voucher::find($id);
         $data = $request->except("_token");
-        $data['updated_at'] = Carbon::now();
-        $voucher->name = $request->name;
-        $voucher->amount = $request->amount;
-        $voucher->minimum = $request->minimum;
-        $voucher->expired_date = $request->expired_date;
-        $voucher->save();
-        return redirect()->back();
+        $voucher->update($data);
+        return redirect()->to('/api-admin/voucher');
     }
 
 

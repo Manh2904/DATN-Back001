@@ -19,18 +19,11 @@
                                    placeholder="Email ...">
                             <select name="status" class="form-control">
                                 <option value="">Trạng thái</option>
-                                <option value="1" {{ Request::get('status') == 1 ? "selected='selected'" : "" }}>Tiếp
-                                    nhận
-                                </option>
-                                <option value="2" {{ Request::get('status') == 2 ? "selected='selected'" : "" }}>Đang
-                                    vận chuyển
-                                </option>
-                                <option value="3" {{ Request::get('status') == 3 ? "selected='selected'" : "" }}>Đã bàn
-                                    giao
-                                </option>
-                                <option value="4" {{ Request::get('status') == 4 ? "selected='selected'" : "" }}>Huỷ
-                                    bỏ
-                                </option>
+                                <option value="5" {{ Request::get('status') == 1 ? "selected='selected'" : "" }}>Chờ xác nhận</option>
+                                <option value="2" {{ Request::get('status') == 2 ? "selected='selected'" : "" }}>Đang vận chuyển</option>
+                                <option value="3" {{ Request::get('status') == 3 ? "selected='selected'" : "" }}>Đã giao hàng</option>
+                                <option value="4" {{ Request::get('status') == 4 ? "selected='selected'" : "" }}>Hoàn thành</option>
+                                <option value="-1" {{ Request::get('status') == -1 ? "selected='selected'" : "" }}>Đã hủy</option>
                             </select>
                             <button type="submit" class="btn btn-success"><i class="fa fa-search"></i> Search</button>
                             <button type="submit" name="export" value="true" class="btn btn-info">
@@ -83,9 +76,9 @@
                             <td>{{ $list->created_at}}</td>
                             <td>
                                 <a data-id="{{ $list->id }}" href="javascript:;"
-                                   data-href="{{ route('ajax.admin.transaction.detail',$list->id)}}" class="label label-primary js-preview-transaction
+                                   data-href="{{ route('ajax.admin.transaction.detail',$list->id)}}" class="btn-xs btn btn-primary js-preview-transaction
       "><i class="fa fa-eye"></i> View</a>
-                                @if ($list->tst_status != 3)
+                                @if ($list->tst_status != 4 && $list->tst_status != -1)
                                 <div class="btn-group">
                                     <button class="btn btn-success btn-xs">Action</button>
                                     <button class="btn btn-success  btn-xs dropdown-toggle" data-toggle="dropdown"
@@ -94,12 +87,16 @@
                                         <span class="sr-only">Toggle Dropdown</span>
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
+                                        <li><a href="{{ route('admin.action.transaction',['waiting_confirmation',$list->id])}}"><i
+                                                        class="fa fa-ban"></i>Chờ xác nhận</a></li>
+                                        <li><a href="{{ route('admin.action.transaction',['confirmed',$list->id])}}"><i
+                                                        class="fa fa-ban"></i>Đã xác nhận</a></li>
                                         <li><a href="{{ route('admin.action.transaction',['process',$list->id])}}"><i
                                                         class="fa fa-ban"></i>Đang bàn giao</a></li>
                                         <li><a href="{{ route('admin.action.transaction',['success',$list->id])}}"><i
-                                                        class="fa fa-ban"></i>Đã bàn giao</a></li>
+                                                        class="fa fa-ban"></i>Đã giao hàng</a></li>
                                         <li><a href="{{ route('admin.action.transaction',['confirm',$list->id])}}"><i
-                                                        class="fa fa-ban"></i>Người dùng đã xác nhận</a></li>
+                                                        class="fa fa-ban"></i>Hoàn thành</a></li>
                                         <li><a href="{{ route('admin.action.transaction',['cancel',$list->id])}}"><i
                                                         class="fa fa-ban"></i>Hủy</a></li>
                                     </ul>
