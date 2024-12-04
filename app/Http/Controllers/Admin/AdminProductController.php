@@ -54,7 +54,7 @@ class AdminProductController extends Controller
         if ($request->file) {
             $this->syncAlbumImageAndProduct($request->file, $id);
         }
-        return redirect()->back();
+        return redirect()->to('/api-admin/product');
     }
 
     private function syncKeyword($keyword, $idProduct)
@@ -143,7 +143,7 @@ class AdminProductController extends Controller
         if ($request->file) {
             $this->syncAlbumImageAndProduct($request->file, $id);
         }
-        return redirect()->back();
+        return redirect()->to('/api-admin/product');
     }
 
     public function hot($id)
