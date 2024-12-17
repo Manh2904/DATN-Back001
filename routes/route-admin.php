@@ -1,6 +1,4 @@
 <?php
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 //admin-auth
 Route::group(['prefix' =>'admin-auth','namespace' => 'Admin\Auth'], function() {
     Route::get('login','AdminController@getLoginAdmin')->name('get.login.admin');
