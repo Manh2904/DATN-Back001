@@ -113,9 +113,7 @@
         <section class="sidebar">
             <!-- Sidebar user panel -->
             <div class="user-panel">
-                <div class="pull-left image" style="width:100%">
-                    <img src="{{ asset('view/img/user2-160x160.jpg') }}">
-                </div>
+               
             </div>
 
             <ul class="sidebar-menu" data-widget="tree">
