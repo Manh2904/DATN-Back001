@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\AdminRequestProduct;
-use App\Models\Category;
+use Carbon\Carbon;
 use App\Models\Keyword;
 use App\Models\Product;
-use Carbon\Carbon;
-use DB;
-use File;
+use App\Models\Category;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
+use App\Http\Requests\AdminRequestProduct;
 
 class AdminProductController extends Controller
 {

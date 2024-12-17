@@ -51,5 +51,8 @@ Route::group(['namespace'=>'Api'], function () {
         Route::get('','VoucherController@index');
         Route::get('detail','VoucherController@detail');
     });
+    Route::prefix('menu')->group(function(){
+        Route::get('','MenuController@index');
+    });
     Route::get('payment/transaction/callback','TransactionController@callback');
 });
