@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-use App\Models\Menu;
-use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
-
-class Attributes extends Model 
-{ 
+use Illuminate\Support\Arr;
+class Attributes extends Model
+{
     protected $guarded=[''];
     public function getType(){
         return Arr::get($this->type,$this->atb_type,"[N\A]");

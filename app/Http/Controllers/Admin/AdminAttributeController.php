@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Carbon\Carbon;
-use App\Models\Menu;
-use App\Models\Category;
-use App\Models\Attributes;
-use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRequestAttibute;
+use App\Models\Attributes;
+use App\Models\Menu;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
+
 class AdminAttributeController extends Controller
 {
     public function index()
     {
-        $attributes = Attributes::with('category:id,c_name,c_cate')->orderByDesc('id')->get();
+        $attributes = Attributes::with('menus:id,name')->orderByDesc('id')->get();
         $viewData = [
             'attributes' => $attributes
         ];
@@ -42,7 +42,7 @@ class AdminAttributeController extends Controller
         $attb->save();
         return redirect()->back();
     }
-    
+
     public function edit($id)
     {
         $attributes = Attributes::find($id);
