@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin\Auth;
 
-use App\Http\Controllers\Controller;
-use Auth;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class AdminController extends Controller
 {
@@ -36,7 +36,7 @@ class AdminController extends Controller
     public function getLogoutAdmin()
     {
         Auth::guard('admins')->logout();
-        return redirect()->to('http://localhost:4000/');
+        return redirect()->to('http://localhost:8000/');
     }
 
 }

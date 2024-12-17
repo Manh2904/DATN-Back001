@@ -15,4 +15,11 @@ class AdminUserController extends Controller
         ];
         return view('admin.user.index', $viewData);
     }
+    public function delete($id)
+    {
+        $user = User::find($id);
+        if ($user) $user->delete();
+
+        return redirect()->back();
+    }
 }

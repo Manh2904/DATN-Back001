@@ -2,22 +2,25 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Models\Category;
+use Cart;
+use Redirect;
+use Notification;
+use App\Models\Menu;
 use App\Models\Order;
 use App\Models\Product;
-use App\Models\Transaction;
 use App\Models\Voucher;
-use Auth;
-use Cart;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
-use Notification;
-use Redirect;
-use Mail;
+use App\Models\Category;
+use App\Models\Attributes;
+use App\Models\Transaction;
 use \Illuminate\Support\Str;
-use Illuminate\Support\Facades\Config;
+use Illuminate\Http\Request;
+use App\Models\OrderAttribute;
 use App\Mail\TransactionSuccess;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Config;
 
 class TransactionController extends Controller
 {
@@ -129,7 +132,7 @@ class TransactionController extends Controller
         ]);
         if ($transactionId) {
             $shopping = $data['products'];
-            Mail::to($data['tst_email'])->send(new TransactionSuccess($shopping));
+            Mail::to($data['tst_email'])->send(new TransactionSuccess($transactionId, $shopping));
             foreach ($shopping as $key => $item) {
                 $product = Product::find($item['od_product_id']);
                 Order::insert([
@@ -139,6 +142,26 @@ class TransactionController extends Controller
                     'od_qty' => $item['od_qty'],
                     'od_price' => $product->pro_price,
                     'od_size' => 37,
+                ]);
+
+                $latestId = Order::orderBy('id', 'desc')->first()['id'];
+                $menuColorId = Menu::where('slug', 'mau')->first()['id'];
+                $menuSizeId = Menu::where('slug', 'kich-co')->first()['id'];
+                $colorId = Attributes::where([
+                    'menu_id' => $menuColorId,
+                    'name' => $item['color'],
+                ])->first()['id'];
+                $sizeId = Attributes::where([
+                    'menu_id' => $menuSizeId,
+                    'name' => $item['size'],
+                ])->first()['id'];
+                OrderAttribute::insert([
+                    'order_id' => $latestId,
+                    'attribute_id' => $colorId
+                ]);
+                OrderAttribute::insert([
+                    'order_id' => $latestId,
+                    'attribute_id' => $sizeId
                 ]);
                 //Tăng số lượt mua của sản phẩm
                 $product->pro_amount = $product->pro_amount - $item['od_qty'];
@@ -219,7 +242,7 @@ class TransactionController extends Controller
             } else {
                 $pay->tst_status = -1;
                 $pay->update();
-                return redirect()->to('http://localhost:4000/?status=error');
+            return redirect()->to('http://localhost:4000/?status=error');
             }
             $pay->update();
         }

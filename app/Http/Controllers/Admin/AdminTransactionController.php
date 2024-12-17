@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Exports\TransactionExport;
-use App\Http\Controllers\Controller;
+use App\Models\Menu;
 use App\Models\Order;
-use App\Models\Transaction;
 use App\Models\Product;
-use DB;
-use Excel;
+use App\Models\Attributes;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Models\OrderAttribute;
+use App\Exports\TransactionExport;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminTransactionController extends Controller
 {
@@ -51,6 +54,30 @@ class AdminTransactionController extends Controller
             $modelProduct = new Product();
 			$size = $modelProduct->size;
             $order = Order::with('product:id,pro_name,pro_slug,pro_avatar')->where('od_transaction_id', $id)->get();
+            foreach ($order as $key => $value) {
+                $menuColorId = Menu::where('slug', 'mau')->first()['id'];
+                $menuSizeId = Menu::where('slug', 'kich-co')->first()['id'];
+                $ord = OrderAttribute::where([
+                    'order_id' => $value->id,
+                ])->get();
+                foreach($ord as $item) {
+                    $attrMaus = Attributes::where([
+                        'menu_id' => $menuColorId,
+                        'id' => $item->attribute_id,
+                    ])->first();
+                    if ($attrMaus) {
+                        $value['mau'] = $attrMaus['name'];
+                    }
+                    $attrSizes = Attributes::where([
+                        'menu_id' => $menuSizeId,
+                        'id' => $item->attribute_id,
+                    ])->first();
+                    if ($attrSizes) {
+                        $value['size'] = $attrSizes['name'];
+                    }
+                }
+
+            }
             $html = view("component.transaction", compact('order', 'size'))->render();
             return response([
                 'html' => $html

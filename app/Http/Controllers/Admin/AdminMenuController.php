@@ -27,16 +27,17 @@ class AdminMenuController extends Controller
     public function store(Request $request)
     {
         $data = $request->except('_token');
-        $data['mn_slug'] = Str::slug($data['mn_name']);
+        $data['active'] = 1;
+        $data['slug'] = Str::slug($data['name']);
         $data['created_at'] = Carbon::now();
         $id = Menu::insertGetId($data);
-        return redirect()->back();
+        return redirect()->to('/api-admin/menu');
     }
 
     public function active($id)
     {
         $menu = Menu::find($id);
-        if ($menu) $menu->mn_status = !$menu->mn_status;
+        if ($menu) $menu->active = !$menu->active;
         $menu->save();
         return redirect()->back();
     }
@@ -66,9 +67,9 @@ class AdminMenuController extends Controller
     {
         $menu = Menu::find($id);
         $data = $request->except('_token');
-        $data['mn_slug'] = Str::slug($data['mn_name']);
+        $data['slug'] = Str::slug($data['name']);
         $data['updated_at'] = Carbon::now();
         $menu->update($data);
-        return redirect()->back();
+        return redirect()->to('/api-admin/menu');
     }
 }

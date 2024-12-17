@@ -37,6 +37,26 @@ Route::group(['prefix'=>'api-admin','namespace'=>'Admin','middleware'=>'check_ad
         Route::get('delete-image/{id}','AdminProductController@deleteImage')->name('admin.product.delete_image');
     });
 
+    Route::group(['prefix'=>'menu'],function(){
+        Route::get('','AdminMenuController@index')->name('admin.menu.index');
+        Route::get('create','AdminMenuController@create')->name('admin.menu.create');
+        Route::post('create','AdminMenuController@store');
+        Route::get('active/{id}','AdminMenuController@active')->name('admin.menu.active');
+        Route::get('update/{id}','AdminMenuController@edit')->name('admin.menu.update');
+        Route::post('update/{id}','AdminMenuController@update');
+        Route::get('delete/{id}','AdminMenuController@delete')->name('admin.menu.delete');
+    });
+
+    Route::group(['prefix'=>'attribute'],function(){
+        Route::get('','AdminAttributeController@index')->name('admin.attribute.index');
+        Route::get('create','AdminAttributeController@create')->name('admin.attribute.create');
+        Route::post('create','AdminAttributeController@store');
+        Route::get('active/{id}','AdminAttributeController@active')->name('admin.attribute.active');
+        Route::get('update/{id}','AdminAttributeController@edit')->name('admin.attribute.update');
+        Route::post('update/{id}','AdminAttributeController@update');
+        Route::get('delete/{id}','AdminAttributeController@delete')->name('admin.attribute.delete');
+    });
+
     Route::group(['prefix'=>'user'],function(){
         Route::get('','AdminUserController@index')->name('admin.user.index');
         Route::get('update/{id}','AdminUserController@edit')->name('admin.user.update');
