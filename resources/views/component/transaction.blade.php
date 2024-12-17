@@ -12,7 +12,7 @@
     @foreach($order as $list)
         <tr>
             <th>#{{ $list->id }}</th>
-            <th>{{ $list->product->pro_name ?? "[N\A]"}}(Kích cỡ: {{ $size[$list->od_size] }})</th>
+            <th>{{ $list->product->pro_name ?? "[N\A]"}}<br/>@if($list->mau) Màu: {{ $list->mau }} @endif<br/>@if($list->size)Kích cỡ: {{ $list->size }} @endif</th>
             <th><img style="height:80px;width:80px" src="{{ $list->product->pro_avatar }}" alt=""></th>
             <th>{{ number_price($list->od_price,0,',','.') }}đ</th>
             <th>{{$list->od_qty }}</th>

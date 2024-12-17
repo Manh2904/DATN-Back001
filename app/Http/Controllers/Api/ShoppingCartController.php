@@ -7,6 +7,9 @@ use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Transaction;
+use App\Models\OrderAttribute;
+use App\Models\Attributes;
+use App\Models\Menu;
 use Auth;
 use Cart;
 use Illuminate\Http\Request;
@@ -43,7 +46,33 @@ class ShoppingCartController extends Controller
             $transactions->where('tst_status', $status);
         }
         $transactions = $transactions->paginate(10);
-
+        foreach ($transactions as $transaction) {
+            foreach ($transaction['orders'] as $order) {
+                $menuColorId = Menu::where('slug', 'mau')->first()['id'];
+                $menuSizeId = Menu::where('slug', 'kich-co')->first()['id'];
+                $ord = OrderAttribute::where([
+                    'order_id' => $order->id,
+                ])->get();
+                $attrMau = "";
+                $attrSize = "";
+                foreach($ord as $item) {
+                    $attrMaus = Attributes::where([
+                        'menu_id' => $menuColorId,
+                        'id' => $item->attribute_id,
+                    ])->first();
+                    if ($attrMaus) {
+                        $order['mau'] = $attrMaus['name'];
+                    }
+                    $attrSizes = Attributes::where([
+                        'menu_id' => $menuSizeId,
+                        'id' => $item->attribute_id,
+                    ])->first();
+                    if ($attrSizes) {
+                        $order['size'] = $attrSizes['name'];
+                    }
+                }
+            }
+        }
         $viewData = [
             'status' => 'success',
             'shopping' => $transactions

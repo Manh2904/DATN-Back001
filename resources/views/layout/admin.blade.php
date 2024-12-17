@@ -55,10 +55,11 @@
     <header class="main-header">
         <!-- Logo -->
         <a href="{{ route('admin.index')}}" class="logo">
-        
-             <img src="{{ asset('view/img/logo11.jpg') }}" class="user-image" alt="User Image" style="width: 200px; ">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b>A</b>LT</span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg"><b>Admini</b>strator </span>
         </a>
-      
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
             <!-- Sidebar toggle button-->
@@ -74,12 +75,12 @@
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="{{ asset('view/img/logo11.jpg') }}" class="user-image" alt="User Image">
+                            <img src="{{ asset('view/img/user2-160x160.jpg') }}" class="user-image" alt="User Image">
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img src="{{ asset('view/img/logo11.jpg') }}" class="img-circle"
+                                <img src="{{ asset('view/img/user2-160x160.jpg') }}" class="img-circle"
                                      alt="User Image">
 
                                 <p>
@@ -113,7 +114,11 @@
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
             <!-- Sidebar user panel -->
-          
+            <div class="user-panel">
+                <div class="pull-left image" style="width:100%">
+                    <img src="{{ asset('view/img/user2-160x160.jpg') }}">
+                </div>
+            </div>
 
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">Thanh điều hướng</li>
@@ -127,6 +132,11 @@
                     <a href="{{ route('admin.category.index') }}">
                         <i class="fa fa-files-o"></i>
                         <span>Danh mục</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('admin.attribute.index') }}">
+                        <i class="fa fa-th"></i> <span>Biến thể</span>
                     </a>
                 </li>
                 <li>

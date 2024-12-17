@@ -24,17 +24,15 @@ class AdminRequestAttibute extends FormRequest
     public function rules()
     {
         return [
-            'atb_name'        =>'required|unique:attributes,atb_name,'.$this->id,
-            'atb_type'        =>'required',
-            'atb_category_id' =>'required'
+            'name'        =>'required|max:7',
+            'menu_id' =>'required'
         ];
     }
     public function messages(){
         return [
-            'atb_name.required' =>'Bạn cần điền tên thuộc tính sản phẩm',
-            'atb_name.unique'   =>'Tên thuộc tính đã tồn tại',
-            'atb_type'          =>'Bạn cần chọn thể loại thuộc tính',
-            'atb_category_id'   =>'Bạn cần chọn thể loại sản phẩm'
+            'name.required' =>'Bạn cần điền tên biến thể',
+            'max.required' =>'Bạn cần điền < 7 ký tự',
+            'menu_id.required'   =>'Bạn cần chọn danh mục biến thể'
         ];
     }
 }
