@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Models\Category;
+use URL;
+use Auth;
+use Session;
+use Redirect;
+use Notification;
+use App\Models\Menu;
 use App\Models\Order;
 use App\Models\Product;
-use App\Models\Transaction;
-use App\Models\OrderAttribute;
+use App\Models\Category;
 use App\Models\Attributes;
-use App\Models\Menu;
-use Auth;
-use Cart;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
-use Notification;
-use Redirect;
-use Session;
-use URL;
+use App\Models\Transaction;
 use \Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Models\OrderAttribute;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Config;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class ShoppingCartController extends Controller
 {
