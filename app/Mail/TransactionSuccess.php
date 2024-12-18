@@ -17,10 +17,12 @@ class TransactionSuccess extends Mailable
      * @return void
      */
     private $transaction;
-    public function __construct($transaction)
+    private $products;
+    public function __construct($transaction, $products)
     {
         $this->transaction =$transaction;
-    }   
+        $this->products =$products;
+    }
 
     /**
      * Build the message.
@@ -30,7 +32,9 @@ class TransactionSuccess extends Mailable
     public function build()
     {
         return $this->view('mails.transaction_success')->with([
-            'shopping' => $this->transaction
+            'shopping' => $this->transaction,
+            'products' => $this->products,
+
         ]);
     }
 }

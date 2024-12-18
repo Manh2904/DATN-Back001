@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers\Api;
 
-use Cart;
-use Redirect;
-use Notification;
-use App\Models\Menu;
+use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
-use App\Models\Voucher;
-use App\Models\Category;
-use App\Models\Attributes;
 use App\Models\Transaction;
-use \Illuminate\Support\Str;
-use Illuminate\Http\Request;
+use App\Models\Voucher;
+use App\Models\Menu;
 use App\Models\OrderAttribute;
-use App\Mail\TransactionSuccess;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
+use App\Models\Attributes;
+use Auth;
+use Cart;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Notification;
+use Redirect;
+use Mail;
+use \Illuminate\Support\Str;
 use Illuminate\Support\Facades\Config;
+use App\Mail\TransactionSuccess;
 
 class TransactionController extends Controller
 {
@@ -240,9 +240,7 @@ class TransactionController extends Controller
             if($request->vnp_ResponseCode == "00") {
                 $pay->tst_status = 5;
             } else {
-                $pay->tst_status = -1;
-                $pay->update();
-            return redirect()->to('http://localhost:4000/?status=error');
+                return redirect()->to('http://localhost:4000/?status=error');
             }
             $pay->update();
         }

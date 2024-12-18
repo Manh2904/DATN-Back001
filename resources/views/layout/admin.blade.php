@@ -55,6 +55,7 @@
     <header class="main-header">
         <!-- Logo -->
         <a href="{{ route('admin.index')}}" class="logo">
+            <span class="logo-mini"><b>G</b>M</span>
             <img src="{{ asset('view/img/logo11.jpg') }}" class="user-image" alt="User Image" style="width: 200px; ">
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">

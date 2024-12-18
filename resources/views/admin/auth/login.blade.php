@@ -31,11 +31,11 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="#"><b>Admini</b>strator</a>
+        <a href="#"><b>Goal</b>Master</a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg">Sign in to start your session</p>
+        <p class="login-box-msg">Đăng nhập để bắt đầu công việc của bạn</p>
 
         <form action="{{ route('get.login.admin') }}" method="post">
             @csrf

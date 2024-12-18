@@ -1,14 +1,4 @@
 <div style="width: 100%;max-width: 600px;margin:0 auto">
-    <div style="height: 55px;background: #3a2615;padding: 10px">
-        <div style="width: 100%">
-            <a href="https://watchex.herokuapp.com/">
-                <img style="height: 55px"
-                     src="https://www.dangquangwatch.vn/upload/slideshow/1787736165_bannerweb148.jpg">
-                <img style="height: 55px"
-                     src="https://www.dangquangwatch.vn/upload/slideshow/1787736165_bannerweb148.jpg">
-            </a>
-        </div>
-    </div>
     <div style="background: white;padding: 15px;border:1px solid #dedede;">
         <h2 style="margin:10px 0;border-bottom: 1px solid #dedede;padding-bottom: 10px;">Danh sách sản phẩm bạn đã
             mua</h2>
@@ -16,7 +6,7 @@
             @php
                 $total = 0;
             @endphp
-            @foreach($shopping as $key => $item)
+            @foreach($products as $key => $item)
             @php
                 $product = \App\Models\Product::find($item['od_product_id']);
                 $total += (($product->pro_price * $item['od_qty']) * (100 - $product->pro_sale)) / 100;
@@ -42,6 +32,9 @@
                     <div style="clear: both;"></div>
                 </div>
             @endforeach
+            @if ($shopping->voucher_id)
+            <p>Voucher đã sử dụng : {{ $shopping->voucher->name }}</p>
+            @endif
             <h2>Tổng tiền : <b>{{ number_format($total) }}đ</b></h2>
         </div>
         <div>
