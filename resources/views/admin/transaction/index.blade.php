@@ -19,7 +19,7 @@
                                 placeholder="ID">
                             <input type="text" class="form-control" value="{{ Request::get('email') }}" name="email"
                                 placeholder="Email ...">
-                            <select name="status" class="form-control">
+                            <select name="status" name="status" id="status" class="form-control">
                                 <option value="">Trạng thái</option>
                                 <option value="5" {{ Request::get('status') == 1 ? "selected='selected'" : '' }}>Chờ
                                     xác nhận</option>
@@ -86,8 +86,8 @@
                                 <td>
                                     <a data-id="{{ $list->id }}" href="javascript:;"
                                         data-href="{{ route('ajax.admin.transaction.detail', $list->id) }}"
-                                        class="btn-xs btn btn-primary js-preview-transaction "><i
-                                            class="fa fa-eye"></i> View</a>
+                                        class="btn-xs btn btn-primary js-preview-transaction "><i class="fa fa-eye"></i>
+                                        View</a>
                                     @if ($list->tst_status != 4 && $list->tst_status != -1)
                                         <div class="btn-group">
                                             <button class="btn btn-success btn-xs">Action</button>
@@ -97,12 +97,23 @@
                                                 <span class="sr-only">Toggle Dropdown</span>
                                             </button>
                                             <ul class="dropdown-menu" style="left: -70px;" role="menu">
-                                                <li><a href="{{ route('admin.action.transaction',['waiting_confirmation',$list->id])}}"><i class="fa fa-check-circle-o fa-s"></i>Chờ xác nhận</a></li>
-                                                <li><a href="{{ route('admin.action.transaction',['confirmed',$list->id])}}"><i class="fa fa-check-circle-o fa-s"></i>Đã xác nhận</a></li>
-                                                <li><a href="{{ route('admin.action.transaction',['process',$list->id])}}"><i class="fa fa-check-circle-o fa-s"></i>Đang bàn giao</a></li>
-                                                <li><a href="{{ route('admin.action.transaction',['success',$list->id])}}"><i class="fa fa-check-circle-o fa-s"></i>Đã giao hàng</a></li>
-                                                <li><a href="{{ route('admin.action.transaction',['confirm',$list->id])}}"><i class="fa fa-check-circle-o fa-s"></i>Hoàn thành</a></li>
-                                                <li><a href="{{ route('admin.action.transaction',['cancel',$list->id])}}"><i class="fa fa-times-circle-o fa-s"></i>Hủy</a></li>
+                                                <li><a
+                                                        href="{{ route('admin.action.transaction', ['waiting_confirmation', $list->id]) }}"><i
+                                                            class="fa fa-check-circle-o fa-s"></i>Chờ xác nhận</a></li>
+                                                <li><a
+                                                        href="{{ route('admin.action.transaction', ['confirmed', $list->id]) }}"><i
+                                                            class="fa fa-check-circle-o fa-s"></i>Đã xác nhận</a></li>
+                                                <li><a
+                                                        href="{{ route('admin.action.transaction', ['success', $list->id]) }}"><i
+                                                            class="fa fa-check-circle-o fa-s"></i>Đã giao hàng</a></li>
+                                                <li><a
+                                                        href="{{ route('admin.action.transaction', ['confirm', $list->id]) }}"><i
+                                                            class="fa fa-check-circle-o fa-s"></i>Hoàn thành</a></li>
+                                                <li><a href="{{ route('admin.action.transaction', ['cancel', $list->id]) }}"><i
+                                                            class="fa fa-times-circle-o fa-s"></i>Hủy</a></li>
+                                            </ul>
+
+
                                         </div>
                                     @endif
                                 </td>
@@ -116,6 +127,7 @@
         <!-- /.content -->
     </div>
 
+
     <!-- /.content-wrapper -->
 
     <div class="modal fade fade" id="modal-preview-transaction">
@@ -128,7 +140,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="content">
-                      
+
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -139,4 +151,5 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+
 @stop

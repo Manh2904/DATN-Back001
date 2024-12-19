@@ -31,7 +31,7 @@
                     <td>{{ $list->provider ?? "Trực tiếp"}}</td>
                     <td>{{ $list->created_at}}</td>
                     <td>
-                        <a href="{{  route('admin.user.delete', $list->id) }}" class="btn btn-xs btn-danger js-delete-confirm"><i class="fa fa-trash"></i> Xóa</a>
+                        <a href="{{  route('admin.user.delete', $list->id) }}" class="btn btn-xs btn-danger js-query-confirm"><i class="fa fa-trash"></i> Xóa</a>
                     </td>
                     </tbody>
                 @endforeach
