@@ -1,6 +1,6 @@
 @extends('layout.admin')
 @section('content')
-    <title>Thêm mới bài viết</title>
+    <title>Thêm mới Voucher</title>
     <div class="content-wrapper">
 
         <section class="content-header">

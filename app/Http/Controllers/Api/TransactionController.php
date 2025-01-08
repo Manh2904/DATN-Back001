@@ -240,6 +240,8 @@ class TransactionController extends Controller
             if($request->vnp_ResponseCode == "00") {
                 $pay->tst_status = 5;
             } else {
+                $pay->tst_status = -1;
+                $pay->update();
                 return redirect()->to('http://localhost:4000/?status=error');
             }
             $pay->update();

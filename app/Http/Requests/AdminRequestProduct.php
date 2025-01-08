@@ -27,7 +27,7 @@ class AdminRequestProduct extends FormRequest
             'pro_name'                  =>'required',
             'pro_description'           =>'required',
             'pro_category'              =>'required',
-            'pro_price'                 =>'required',
+            'pro_price'                 =>'required|max:10',
             'pro_content'               =>'required'
         ];
     }
@@ -37,6 +37,7 @@ class AdminRequestProduct extends FormRequest
             'pro_description.required'  =>'Mô tả sản phẩm không được để trống',
             'pro_category.required'     =>"Bạn chưa chọn thể loại sản phẩm",
             'pro_price.required'        => 'Bạn chưa điền giá sản phẩm',
+            'pro_price.max'        => 'Số tiền phải dưới 10 chữ số',
             'pro_content.required'      =>'Bạn chưa điền nội dung sản phẩm'
         ];
     }

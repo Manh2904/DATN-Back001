@@ -103,6 +103,8 @@
                                                 <li><a
                                                         href="{{ route('admin.action.transaction', ['confirmed', $list->id]) }}"><i
                                                             class="fa fa-check-circle-o fa-s"></i>Đã xác nhận</a></li>
+                                                            <li><a href="{{ route('admin.action.transaction',['process',$list->id])}}"><i
+                                                                class="fa fa-check-circle-o fa-s"></i>Đang giao hàng</a></li>
                                                 <li><a
                                                         href="{{ route('admin.action.transaction', ['success', $list->id]) }}"><i
                                                             class="fa fa-check-circle-o fa-s"></i>Đã giao hàng</a></li>
