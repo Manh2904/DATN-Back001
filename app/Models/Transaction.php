@@ -32,6 +32,10 @@ class Transaction extends Model
             'class' =>'btn btn-primary',
             'name'  =>'Đã xác nhận'
         ],
+        '1' =>[
+            'class' =>'btn btn-primary',
+            'name'  =>'Đã xác nhận'
+        ],
     ];
      public function getStatus()
     {

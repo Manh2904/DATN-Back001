@@ -1,4 +1,6 @@
 <?php
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 //admin-auth
 Route::group(['prefix' =>'admin-auth','namespace' => 'Admin\Auth'], function() {
     Route::get('login','AdminController@getLoginAdmin')->name('get.login.admin');
@@ -80,6 +82,8 @@ Route::group(['prefix'=>'api-admin','namespace'=>'Admin','middleware'=>'check_ad
         Route::get('guest/{id}','AdminTransactionController@guest')->name('admin.transaction.guest');
         Route::get('order-delete/{id}','AdminTransactionController@deleteOrderItem')->name('ajax.admin.transaction.order_delete');
         Route::get('view-transaction/{id}','AdminTransactionController@getTransactionDetail')->name('ajax.admin.transaction.detail');
+        Route::get('transaction/cancel/{id}','AdminTransactionController@cancelTransaction')->name('admin.transaction.cancel');
+        Route::post('transaction/cancel/{id}','AdminTransactionController@cancelTransactionAction');
         Route::get('action/{action}/{id}','AdminTransactionController@getAction')->name('admin.action.transaction');
     });
 

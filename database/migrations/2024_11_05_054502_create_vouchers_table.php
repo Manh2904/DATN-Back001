@@ -19,6 +19,7 @@ class CreateVouchersTable extends Migration
             $table->integer('active')->default(1);
             $table->integer('amount')->default(0);
             $table->integer('minimum')->default(0);
+            $table->integer('maximum')->default(0);
             $table->date('expired_date');
             $table->timestamps();
         });

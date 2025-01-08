@@ -163,9 +163,6 @@ class TransactionController extends Controller
                     'order_id' => $latestId,
                     'attribute_id' => $sizeId
                 ]);
-                //Tăng số lượt mua của sản phẩm
-                $product->pro_amount = $product->pro_amount - $item['od_qty'];
-                $product->update();
             }
         }
 
@@ -242,7 +239,7 @@ class TransactionController extends Controller
             } else {
                 $pay->tst_status = -1;
                 $pay->update();
-                return redirect()->to('http://localhost:4000/?status=error');
+            return redirect()->to('http://localhost:4000/?status=error');
             }
             $pay->update();
         }
@@ -256,6 +253,14 @@ class TransactionController extends Controller
         $transaction = Transaction::find($id);
         if ($status == -1 && ($transaction->tst_status == 5 || $transaction->tst_status == 6)) {
             $transaction->tst_status = $status;
+            $transaction->description_cancel = $request->description_cancel;
+            $orders = Order::where("od_transaction_id", $id)->get();
+            foreach ($orders as $order) {
+                $product = Product::find($order->od_product_id);
+                $product->pro_pay = $product->pro_pay - 1;
+                $product->pro_amount = $product->pro_amount + $order->od_qty;
+                $product->update();
+            }
         }
         if ($status == 4 && $transaction->tst_status == 3) {
             $transaction->tst_status = $status;
