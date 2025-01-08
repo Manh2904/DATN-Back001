@@ -45,6 +45,20 @@
                     </div>
 
                     <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group {{$errors->first('maximum') ?'has-error':''}}">
+                                <label for="des">Giá trị tối đa</label>
+                                <input type="text" class="form-control" name="maximum" id="email"
+                               value="{{  $voucher->maximum ?? old('maximum') }}" placeholder="Giá trị tối đa..."
+                                    autocomplete="off">
+                                @if($errors->first('maximum'))
+                                    <p class="text-danger">{{ $errors->first('maximum') }}</p>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-md-4">
                             <div class="form-group {{$errors->first('expired_date') ?'has-error':''}}">
                                 <label for="des">Ngày hết hạn</label>

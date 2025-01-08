@@ -45,11 +45,14 @@ class ProductDetailController extends Controller
         foreach ($ratingsDashboard as $key => $item) {
             $ratingDefault[$item['r_number']] = $item;
         }
-        $isMuaHang = Order::where('od_product_id', $product->id)
-        ->whereHas('transaction', function($q){
-            $q->where('tst_user_id', auth('api')->user()->id)
-            ->where('tst_status', 4);
-        })->count();
+        $isMuaHang = 0;
+        if ( auth('api')->user()) {
+            $isMuaHang = Order::where('od_product_id', $product->id)
+            ->whereHas('transaction', function($q){
+                $q->where('tst_user_id', auth('api')->user()->id)
+                ->where('tst_status', 4);
+            })->count();
+        }
         $product['is_buy'] = $isMuaHang;
         $product['rating'] = $rating;
         $viewData = [
@@ -61,8 +64,6 @@ class ProductDetailController extends Controller
             'user_favourite' => $user_favourite,
             'productSuggest' => $this->getProductsSuggest($product->pro_category),
         ];
-        Product::where('id', $product->id)
-            ->increment('pro_view');
         return response()->json($viewData);
     }
 

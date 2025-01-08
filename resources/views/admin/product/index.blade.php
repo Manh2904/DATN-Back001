@@ -25,7 +25,7 @@
                 <td>Thể loại</td>
                 <td>Người đăng</td>
                 <td>Avatar</td>
-                <td>Hot</td>
+                <td>Sản phẩm nổi bật</td>
                 <td>Active</td>
                 <td>Pay</td>
                 <td>View</td>
@@ -42,9 +42,9 @@
                     <td><img src="{{ $list->pro_avatar }}" style="width:80px;height:100px"></td>
                     <td>
                         @if($list->pro_hot == 1)
-                            <a href="{{route('admin.product.hot',$list->id) }}" class="btn btn-primary">Hot</a>
+                            <a href="{{route('admin.product.hot',$list->id) }}" class="btn btn-primary">Bật</a>
                         @else
-                            <a href="{{route('admin.product.hot',$list->id) }}" class="btn btn-success">None</a>
+                            <a href="{{route('admin.product.hot',$list->id) }}" class="btn btn-success">Tắt</a>
                         @endif
                     </td>
                     <td>

@@ -25,8 +25,9 @@ class AdminRequestVoucher extends FormRequest
     {
         return [
             'name'          =>'required|unique:vouchers,name,'.$this->id,
-            'minimum'       =>'required|int|min:0|max:500000',
-            'amount'        =>'required|int|max:100|min:1',
+            'minimum'       =>'required|int|min:0',
+            'maximum'       => 'required|int|min:'.$this->minimum,
+            'amount'        =>'required|int|max:100',
             'expired_date'  =>'required'
         ];
     }
@@ -37,11 +38,11 @@ class AdminRequestVoucher extends FormRequest
             'minimum.required'      =>'Bạn cần điền giá trị tối thiểu',
             'minimum.int'           =>'Giá trị tối thiểu phải là số',
             'minimum.min'           =>'Giá trị tối thiểu không hợp lệ',
-            'minimum.max'           =>'Giá trị tối đa chỉ được đến 500k',
+            'maximum.required'      =>'Bạn cần điền giá trị tối đa',
+            'maximum.min'           =>'Giá trị tối đa không được nhỏ hơn giá trị tối thiểu',
             'amount.required'       =>'Bạn cần điền giá trị đơn hàng tối thiểu',
             'amount.int'            =>'Số tiền giảm giá phải là số',
             'amount.max'            =>'Số tiền giảm giá tối đa là 100%',
-            'amount.min'            =>'Số tiền giảm giá tối thiểu không hợp lệ',
             'expired_date.required' =>'Bạn cần chọn ngày hết hạn'
         ];
     }

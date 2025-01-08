@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Menu;
-use App\Models\Order;
-use App\Models\Product;
-use App\Models\Attributes;
-use App\Models\Transaction;
-use Illuminate\Http\Request;
-use App\Models\OrderAttribute;
 use App\Exports\TransactionExport;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Order;
+use App\Models\OrderAttribute;
+use App\Models\Attributes;
+use App\Models\Menu;
+use App\Models\Transaction;
+use App\Models\Product;
+use DB;
+use Excel;
+use Illuminate\Http\Request;
 
 class AdminTransactionController extends Controller
 {
@@ -166,4 +166,30 @@ class AdminTransactionController extends Controller
         }
         return redirect()->back();
     }
+
+    public function cancelTransaction(Request $request, $id)
+    {
+        $transaction = Transaction::findOrFail($id);
+        $viewData = [
+            'transaction' => $transaction,
+        ];
+        return view('admin.transaction.cancel', $viewData);
+    }
+
+    public function cancelTransactionAction(Request $request, $id)
+    {
+        $transaction = Transaction::findOrFail($id);
+        $transaction->tst_status = -1;
+        $transaction->description_cancel = $request->description_cancel;
+        $transaction->update();
+        $orders = Order::where("od_transaction_id", $id)->get();
+        foreach ($orders as $order) {
+            $product = Product::find($order->od_product_id);
+            $product->pro_pay = $product->pro_pay - 1;
+            $product->pro_amount = $product->pro_amount + $order->od_qty;
+            $product->update();
+        }
+        return redirect()->route('admin.transaction.index');
+    }
+
 }

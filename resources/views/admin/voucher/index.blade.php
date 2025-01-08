@@ -5,7 +5,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-               voucher
+               Voucher
                 <small><a href="{{ route('admin.voucher.create') }}" class="btn btn-success">Thêm mới</a></small>
             </h1>
 
@@ -20,6 +20,7 @@
                 <td>Trạng thái</td>
                 <td>Giảm giá</td>
                 <td>Giá trị tối thiểu</td>
+                <td>Giá trị tối đa</td>
                 <td>Ngày hết hạn</td>
                 <td>Tạo lúc</td>
                 <td>Sửa lúc</td>
@@ -38,6 +39,7 @@
                     </td>
                     <td>{{ number_format($list->amount,0,',','.') }}</td>
                     <td>{{ number_format($list->minimum,0,',','.') }}</td>
+                    <td>{{ number_format($list->maximum,0,',','.') }}</td>
                     <td><span class="label label-danger">{{ $list->expired_date }}</span></td>
 
                     <!-- <td>{{$list->a_content }}</td> -->
