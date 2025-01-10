@@ -115,6 +115,9 @@ class TransactionController extends Controller
         $id = null;
         if ($voucher) {
             $price = $data['tst_total_money'] * (100 - $voucher->amount) / 100;
+            if ($price < $data['tst_total_money'] - $voucher->maximum) {
+                $price = $data['tst_total_money'] - $voucher->maximum;
+            }
             $id = $voucher->id;
         }
         $transactionId = Transaction::create([
@@ -163,6 +166,10 @@ class TransactionController extends Controller
                     'order_id' => $latestId,
                     'attribute_id' => $sizeId
                 ]);
+
+                $product->pro_pay = $product->pro_pay + 1;
+                $product->pro_amount = $product->pro_amount - $item['od_qty'];
+                $product->update();
             }
         }
 
@@ -264,14 +271,6 @@ class TransactionController extends Controller
         }
         if ($status == 4 && $transaction->tst_status == 3) {
             $transaction->tst_status = $status;
-            $orders = Order::where("od_transaction_id", $id)->get();
-            foreach ($orders as $order) {
-                //Tăng số lượt mua của sản phẩm
-                $product = Product::find($order->od_product_id);
-                $product->pro_pay = $product->pro_pay + 1;
-                $product->pro_amount = $product->pro_amount - $order->od_qty;
-                $product->update();
-            }
         }
         $transaction->save();
         $viewData = [
