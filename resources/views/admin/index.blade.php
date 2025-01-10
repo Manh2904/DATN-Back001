@@ -102,6 +102,9 @@
                                 <button type="button" class="btn bg-teal btn-sm" data-widget="remove"><i
                                             class="fa fa-times"></i>
                                 </button>
+                                <button type="button" class="btn bg-teal btn-sm daterange "
+                                         title="Date range">
+                                    <i class="fa fa-calendar"></i></button>
                             </div>
                         </div>
                         <div class="box-body border-radius-none">
@@ -365,7 +368,7 @@
                     <div class="box box-solid bg-light-blue-gradient">
                         <div class="box-header">
                             <!-- tools box -->
-                            <div class="pull-right box-tools">
+                            <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-primary btn-sm daterange pull-right"
                                         data-toggle="tooltip" title="Date range">
                                     <i class="fa fa-calendar"></i></button>
