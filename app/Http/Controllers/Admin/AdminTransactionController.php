@@ -172,10 +172,14 @@ class AdminTransactionController extends Controller
     public function cancelTransaction(Request $request, $id)
     {
         $transaction = Transaction::findOrFail($id);
-        $viewData = [
-            'transaction' => $transaction,
-        ];
-        return view('admin.transaction.cancel', $viewData);
+
+        if($transaction->tst_status == 5 || $transaction->tst_status == 6) {
+            $viewData = [
+                'transaction' => $transaction,
+            ];
+            return view('admin.transaction.cancel', $viewData);
+        }
+        return back();
     }
 
     public function cancelTransactionAction(Request $request, $id)
