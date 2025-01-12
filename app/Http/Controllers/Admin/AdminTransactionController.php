@@ -127,39 +127,41 @@ class AdminTransactionController extends Controller
     public function getAction($action, $id)
     {
         $transactions = Transaction::find($id);
-        if ($action == 'confirm') {
-            $orders = Order::where("od_transaction_id", $id)->get();
-            foreach ($orders as $order) {
-                //Tăng số lượt mua của sản phẩm
-                $product = Product::find($order->od_product_id);
-                $product->pro_pay = $product->pro_pay + 1;
-                $product->pro_amount = $product->pro_amount - $order->od_qty;
-                $product->update();
-            }
-        }
         if ($transactions) {
             switch ($action) {
                 case 'process':
-                    $transactions->tst_status = 2;
+                    if($transactions->tst_status == 6) {
+                        $transactions->tst_status = 2;
+                    }
                     break;
                 case 'success':
-                    $transactions->tst_status = 3;
+                    if($transactions->tst_status == 2) {
+                        $transactions->tst_status = 3;
+                    }
                     break;
 
                 case 'cancel':
-                    $transactions->tst_status = -1;
+                    if($transactions->tst_status == 5 && $transactions->tst_status == 6) {
+                        $transactions->tst_status = -1;
+                    }
                     break;
 
                 case 'confirm':
-                    $transactions->tst_status = 4;
+                    if($transactions->tst_status == 3) {
+                        $transactions->tst_status = 4;
+                    }
                     break;
 
-                case 'waiting_confirmation':
-                    $transactions->tst_status = 5;
-                    break;
+                // case 'waiting_confirmation':
+                //     if($transactions->tst_status == 5) {
+                //         $transactions->tst_status = 5;
+                //     }
+                //     break;
 
                 case 'confirmed':
-                    $transactions->tst_status = 6;
+                    if($transactions->tst_status == 5) {
+                        $transactions->tst_status = 6;
+                    }
                     break;
             }
             $transactions->save();
