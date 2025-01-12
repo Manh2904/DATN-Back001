@@ -126,6 +126,7 @@ class AdminTransactionController extends Controller
 
     public function getAction($action, $id)
     {
+        // [5, 6, 2, 3, 4, -1]
         $transactions = Transaction::find($id);
         if ($transactions) {
             switch ($action) {
@@ -175,12 +176,13 @@ class AdminTransactionController extends Controller
 
         if($transaction->tst_status == 5 || $transaction->tst_status == 6) {
             $viewData = [
-                'transaction' => $transaction,
+              'transaction' => $transaction,
             ];
             return view('admin.transaction.cancel', $viewData);
         }
         return back();
     }
+
 
     public function cancelTransactionAction(Request $request, $id)
     {
