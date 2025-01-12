@@ -91,22 +91,18 @@
                                         <span class="sr-only">Toggle Dropdown</span>
                                     </button>
                                     <ul class="dropdown-menu" style="left: -70px;" role="menu">
-                                        <li><a
-                                                href="{{ route('admin.action.transaction', ['waiting_confirmation', $list->id]) }}"><i
-                                                    class="fa fa-check-circle-o fa-s"></i>Chờ xác nhận</a></li>
-                                        <li><a
-                                                href="{{ route('admin.action.transaction', ['confirmed', $list->id]) }}"><i
-                                                    class="fa fa-check-circle-o fa-s"></i>Đã xác nhận</a></li>
-                                                    <li><a href="{{ route('admin.action.transaction',['process',$list->id])}}"><i
-                                                        class="fa fa-check-circle-o fa-s"></i>Đang giao hàng</a></li>
-                                        <li><a
-                                                href="{{ route('admin.action.transaction', ['success', $list->id]) }}"><i
-                                                    class="fa fa-check-circle-o fa-s"></i>Đã giao hàng</a></li>
-                                        <li><a
-                                                href="{{ route('admin.action.transaction', ['confirm', $list->id]) }}"><i
-                                                    class="fa fa-check-circle-o fa-s"></i>Hoàn thành</a></li>
-                                        <li><a href="{{ route('admin.action.transaction', ['cancel', $list->id]) }}"><i
-                                                    class="fa fa-times-circle-o fa-s"></i>Hủy</a></li>
+                                        <li><a href="{{ route('admin.action.transaction',['waiting_confirmation',$list->id])}}"><i
+                                                        class="fa fa-ban"></i>Chờ xác nhận</a></li>
+                                        <li><a href="{{ route('admin.action.transaction',['confirmed',$list->id])}}"><i
+                                                        class="fa fa-ban"></i>Đã xác nhận</a></li>
+                                        <li><a href="{{ route('admin.action.transaction',['process',$list->id])}}"><i
+                                                        class="fa fa-ban"></i>Đang bàn giao</a></li>
+                                        <li><a href="{{ route('admin.action.transaction',['success',$list->id])}}"><i
+                                                        class="fa fa-ban"></i>Đã giao hàng</a></li>
+                                        <li><a href="{{ route('admin.action.transaction',['confirm',$list->id])}}"><i
+                                                        class="fa fa-ban"></i>Hoàn thành</a></li>
+                                        <li><a href="{{ route('admin.transaction.cancel',$list->id)}}"><i
+                                                        class="fa fa-ban"></i>Hủy</a></li>
                                     </ul>
                                 </div>
                                 @endif
